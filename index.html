@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Right now · Silva's School</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#F7F8FB;--ink:#1F2430;--muted:#555C6B;--card:#fff;--l:#DCE8FF;--o:#FFE6D2;--n:#EEF0F4;--line:#D5D9E2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#14161C;--ink:#EEF0F4;--muted:#A9B0BE;--card:#1E212A;--l:#243A60;--o:#5A3B24;--n:#2B2F3B;--line:#394052}}
+:root[data-theme="dark"]{--bg:#14161C;--ink:#EEF0F4;--muted:#A9B0BE;--card:#1E212A;--l:#243A60;--o:#5A3B24;--n:#2B2F3B;--line:#394052}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',system-ui,Arial,sans-serif}
+main{max-width:520px;margin:0 auto;padding:20px 18px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--muted);font-weight:600}
+.pill{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:6px 12px;color:var(--ink)}
+.banner{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:var(--card);border:1px dashed var(--line);font-size:14px}
+.now{margin-top:16px;border-radius:22px;padding:24px 22px;background:var(--n)}
+.now.l{background:var(--l)}.now.o{background:var(--o)}
+.badge{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 10px;border-radius:14px;background:var(--card)}
+h1{margin:14px 0 6px;font-size:40px;line-height:1.05;font-weight:800}
+.range{font-size:17px;font-weight:600}
+.left{margin-top:18px;font-size:30px;font-weight:800}
+.bar{margin-top:12px;height:10px;border-radius:6px;background:var(--card);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ink)}
+.next{margin-top:16px;padding:16px 18px;border-radius:16px;background:var(--card);border:1px solid var(--line);font-size:17px}
+.next small{display:block;color:var(--muted);font-size:13px;font-weight:600;margin-bottom:4px}
+h2{margin:26px 0 8px;font-size:16px;color:var(--muted)}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;gap:12px;padding:10px 12px;border-radius:10px;margin-bottom:6px;background:var(--n);font-size:15px}
+li.l{background:var(--l)}li.o{background:var(--o)}
+li span:first-child{width:92px;flex:none;font-weight:600}
+li.cur{outline:2px solid var(--ink)}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><span class="pill" id="wk">Week A</span><span id="clock"></span></div>
+<div class="banner" id="banner" hidden></div>
+<section class="now" id="now" aria-live="polite">
+<span class="badge" id="badge"></span>
+<h1 id="label"></h1>
+<div class="range" id="range"></div>
+<div class="left" id="left"></div>
+<div class="bar"><i id="fill"></i></div>
+</section>
+<div class="next"><small>Next</small><span id="next"></span></div>
+<h2 id="todayh">Rest of today</h2>
+<ul id="list"></ul>
+</main>
+<script>
+var SCHED={"A":{"Mon":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","Crimsyn build","l"],["11:00","11:45","PE: back strength","o"],["11:45","12:45","Lunch + documentary","o"],["12:45","15:00","Worldbuilding (paper)","o"],["15:00","16:00","Job hunt","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Bot lab: bots + lorebooks","l"],["20:00","21:00","SillyTavern","n"]],"Tue":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","CSS lab","l"],["11:00","11:45","PE: yoga","o"],["11:45","12:30","Lunch + music","o"],["12:30","15:00","Novel outline (paper)","o"],["15:00","16:00","Pitch outreach","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Crimsyn build","l"],["20:00","21:00","Ko-fi content","n"]],"Wed":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","Crimsyn build","l"],["11:00","11:45","PE: core + stretch","o"],["11:45","12:30","Lunch + music","o"],["12:30","14:30","OC sketch + moodboard","o"],["14:30","15:00","Light choreo","o"],["15:00","16:00","Portfolio case study","l"],["16:00","17:00","Shower + reset","n"],["17:00","19:00","Image gen lab","l"],["19:00","21:00","SillyTavern","n"]],"Thu":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","Bot lab: bots + lorebooks","l"],["11:00","11:30","Writing prompt","o"],["11:30","12:15","PE: yoga","o"],["12:15","13:00","Lunch + music","o"],["13:00","14:30","HYBRIS worldbuilding","o"],["14:30","15:00","Nap / free","o"],["15:00","16:00","Job hunt","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Hawthorne site","l"],["20:00","21:00","Ko-fi content","n"]],"Fri":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","10:30","Lovebridge hub","l"],["10:30","11:00","Admin","l"],["11:00","11:45","PE: dance basics","o"],["11:45","14:15","Film club","o"],["14:15","15:00","Nap / free","o"],["15:00","16:00","Report card + admin","l"],["16:00","17:00","Shower + reset","n"],["17:00","19:00","Wildcard elective (dice roll)","l"],["19:00","21:00","Free night","n"]]},"B":{"Mon":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","Crimsyn build","l"],["11:00","11:45","PE: core + stretch","o"],["11:45","12:30","Lunch + music","o"],["12:30","14:30","OC moodboard","o"],["14:30","15:00","Nap / free","o"],["15:00","16:00","Pitch outreach","l"],["16:00","17:00","Shower + reset","n"],["17:00","19:30","Image gen lab","l"],["19:30","21:00","Ko-fi content","n"]],"Tue":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","Lovebridge hub","l"],["11:00","11:45","PE: yoga","o"],["11:45","13:00","Lunch + documentary","o"],["13:00","15:00","Worldbuilding (paper)","o"],["15:00","16:00","Job hunt","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Bot lab: bots + lorebooks","l"],["20:00","21:00","SillyTavern","n"]],"Wed":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","10:30","Portfolio case study","l"],["10:30","11:00","Writing prompt","o"],["11:00","11:45","PE: mobility","o"],["11:45","12:30","Lunch + music","o"],["12:30","14:30","Novel outline (paper)","o"],["14:30","15:00","Light choreo","o"],["15:00","16:00","Job hunt","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Hawthorne site","l"],["20:00","21:00","Free night","n"]],"Thu":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","CSS lab","l"],["11:00","11:45","PE: back strength","o"],["11:45","13:00","Lunch + documentary","o"],["13:00","15:00","HYBRIS lore bible","o"],["15:00","16:00","Job hunt","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Crimsyn build","l"],["20:00","21:00","SillyTavern","n"]],"Fri":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","HYBRIS site","l"],["11:00","11:45","PE: dance basics","o"],["11:45","14:15","Film club","o"],["14:15","15:00","Nap / free","o"],["15:00","16:00","Report card + admin","l"],["16:00","17:00","Shower + reset","n"],["17:00","19:00","Wildcard elective (dice roll)","l"],["19:00","21:00","Free night","n"]]}};
+var DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var FULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var KIND={l:'Laptop ok',o:'Laptop OFF',n:'Routine'};
+function mins(t){var p=t.split(':');return +p[0]*60+ +p[1];}
+function fmt(x){var h=Math.floor(x/60),m=x%60;return h+':'+(m<10?'0':'')+m;}
+function dur(x){var h=Math.floor(x/60),m=x%60;return h?(h+'h '+(m<10?'0':'')+m+'m'):(m+' min');}
+function weekOf(d){
+  var days=Math.round((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2026,9,19))/86400000);
+  var idx=Math.floor(days/7);
+  return ((idx%2)+2)%2===0?'A':'B';
+}
+function $(id){return document.getElementById(id);}
+function render(){
+  var now=new Date(),dow=now.getDay(),cur=now.getHours()*60+now.getMinutes();
+  var weekend=dow===0||dow===6;
+  var monday=new Date(now.getFullYear(),now.getMonth(),now.getDate()+(weekend?(dow===6?2:1):0));
+  var wk=weekOf(weekend?monday:now);
+  $('wk').textContent='Week '+wk+(weekend?' (next)':'');
+  $('clock').textContent=FULL[dow]+' · '+fmt(cur);
+  var started=new Date(now.getFullYear(),now.getMonth(),now.getDate())>=new Date(2026,9,19);
+  var b=$('banner');
+  if(!started){b.hidden=false;b.textContent='School starts Monday Oct 19. This is a preview of Week A.';}else{b.hidden=true;}
+  var now_=$('now'),list=$('list');
+  list.innerHTML='';
+  var nextText='';
+  if(weekend){
+    now_.className='now';$('badge').textContent='Weekend';$('label').textContent='No school';
+    $('range').textContent='Free-for-all days';$('left').textContent='';$('fill').style.width='0';
+    var f=SCHED[wk].Mon[0];
+    nextText='Monday '+fmt(mins(f[0]))+' · '+f[2];
+    $('todayh').textContent='';
+  } else {
+    var blocks=SCHED[weekOf(now)][DAYS[dow]];
+    var idx=-1;
+    for(var i=0;i<blocks.length;i++){if(cur>=mins(blocks[i][0])&&cur<mins(blocks[i][1])){idx=i;break;}}
+    if(idx>=0){
+      var bl=blocks[idx],s=mins(bl[0]),e=mins(bl[1]);
+      now_.className='now '+bl[3];
+      $('badge').textContent=KIND[bl[3]];
+      $('label').textContent=bl[2];
+      $('range').textContent=fmt(s)+' to '+fmt(e);
+      $('left').textContent=dur(e-cur)+' left';
+      $('fill').style.width=Math.round((cur-s)/(e-s)*100)+'%';
+      var nb=blocks[idx+1];
+      nextText=nb?fmt(mins(nb[0]))+' · '+nb[2]:(dow===5?'Weekend':'Tomorrow 7:00 · Homeroom');
+    } else if(cur<mins(blocks[0][0])){
+      now_.className='now';$('badge').textContent='Before school';$('label').textContent='Bell at 7:00';
+      $('range').textContent='';$('left').textContent=dur(mins(blocks[0][0])-cur)+' to go';$('fill').style.width='0';
+      nextText='7:00 · '+blocks[0][2];
+    } else {
+      now_.className='now';$('badge').textContent='School is out';$('label').textContent='Day done';
+      $('range').textContent='Wind-down alarm at 11:30, lights out around midnight';$('left').textContent='';$('fill').style.width='100%';
+      nextText=dow===5?'Weekend':'Tomorrow 7:00 · Homeroom';
+    }
+    $('todayh').textContent='Today · '+FULL[dow];
+    for(var j=0;j<blocks.length;j++){
+      if(cur>=mins(blocks[j][1]))continue;
+      var li=document.createElement('li');
+      li.className=blocks[j][3]+(j===idx?' cur':'');
+      var a=document.createElement('span');a.textContent=fmt(mins(blocks[j][0]))+'-'+fmt(mins(blocks[j][1]));
+      var c=document.createElement('span');c.textContent=blocks[j][2];
+      li.appendChild(a);li.appendChild(c);list.appendChild(li);
+    }
+  }
+  $('next').textContent=nextText;
+}
+render();setInterval(render,20000);
+</script>
+</body>
+</html>
