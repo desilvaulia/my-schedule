@@ -3,117 +3,273 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Right now · Silva's School</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap">
+<meta name="color-scheme" content="dark">
+<title>Right Now.exe — SIL's Diva School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
 <style>
-:root{--bg:#F7F8FB;--ink:#1F2430;--muted:#555C6B;--card:#fff;--l:#DCE8FF;--o:#FFE6D2;--n:#EEF0F4;--line:#D5D9E2}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#14161C;--ink:#EEF0F4;--muted:#A9B0BE;--card:#1E212A;--l:#243A60;--o:#5A3B24;--n:#2B2F3B;--line:#394052}}
-:root[data-theme="dark"]{--bg:#14161C;--ink:#EEF0F4;--muted:#A9B0BE;--card:#1E212A;--l:#243A60;--o:#5A3B24;--n:#2B2F3B;--line:#394052}
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{
+  --pink1:#FF8FD1; --pink2:#FF3FA8; --pink3:#C2127A; --pinkdeep:#5A0038;
+  --xpblue1:#3D8EEF; --xpblue2:#1D54C9; --xpblue3:#0F3A9E;
+  --chrome:#ECE9D8; --chromedark:#C8C2AE;
+  --lcd-bg:#1A000F; --lcd-fg:#FF6FC2;
+  color-scheme: dark;
+}
+*,*:before,*:after{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*,*:before,*:after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',system-ui,Arial,sans-serif}
-main{max-width:520px;margin:0 auto;padding:20px 18px 40px}
-.top{display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--muted);font-weight:600}
-.pill{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:6px 12px;color:var(--ink)}
-.banner{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:var(--card);border:1px dashed var(--line);font-size:14px}
-.now{margin-top:16px;border-radius:22px;padding:24px 22px;background:var(--n)}
-.now.l{background:var(--l)}.now.o{background:var(--o)}
-.badge{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 10px;border-radius:14px;background:var(--card)}
-h1{margin:14px 0 6px;font-size:40px;line-height:1.05;font-weight:800}
-.range{font-size:17px;font-weight:600}
-.left{margin-top:18px;font-size:30px;font-weight:800}
-.bar{margin-top:12px;height:10px;border-radius:6px;background:var(--card);overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--ink)}
-.next{margin-top:16px;padding:16px 18px;border-radius:16px;background:var(--card);border:1px solid var(--line);font-size:17px}
-.next small{display:block;color:var(--muted);font-size:13px;font-weight:600;margin-bottom:4px}
-h2{margin:26px 0 8px;font-size:16px;color:var(--muted)}
-ul{list-style:none;margin:0;padding:0}
-li{display:flex;gap:12px;padding:10px 12px;border-radius:10px;margin-bottom:6px;background:var(--n);font-size:15px}
-li.l{background:var(--l)}li.o{background:var(--o)}
-li span:first-child{width:92px;flex:none;font-weight:600}
-li.cur{outline:2px solid var(--ink)}
+body{
+  margin:0;min-height:100vh;
+  font-family:Tahoma,Verdana,Geneva,sans-serif;
+  color:#111;
+  background:linear-gradient(180deg,#5AA7FF 0%,#1F62D8 55%,#0B2E86 100%);
+}
+main{max-width:480px;margin:0 auto;padding:22px 14px 40px;display:flex;flex-direction:column;gap:14px}
+
+/* ===== WinXP title bar + status bar ===== */
+.xp-frame{border-radius:9px 9px 6px 6px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.45);border:1px solid #0A2E86}
+.xp-titlebar{
+  display:flex;align-items:center;gap:7px;padding:5px 6px;
+  background:linear-gradient(180deg,#5FA3FF 0%,#2E73E6 30%,#1453C9 55%,#0C3AA0 100%);
+  position:relative;
+}
+.xp-titlebar::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:rgba(255,255,255,.55)}
+.xp-icon{font-size:14px;line-height:1;filter:drop-shadow(0 1px 0 rgba(0,0,0,.4))}
+.xp-title{flex:1;color:#fff;font-size:12.5px;font-weight:700;text-shadow:0 1px 1px rgba(0,0,0,.5);letter-spacing:.01em}
+.xp-btns{display:flex;gap:3px}
+.xp-btn{
+  width:19px;height:17px;border-radius:3px;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:800;color:#0C3AA0;
+  background:linear-gradient(180deg,#fff,#CFE4FF 55%,#9EC4FF);
+  border:1px solid #0C3AA0;box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+}
+.xp-btn.close{color:#7A0000;background:linear-gradient(180deg,#FF9A8E,#E8483A 55%,#B82A1E);border-color:#6E0000}
+.xp-statusbar{
+  display:flex;background:linear-gradient(180deg,var(--chrome),var(--chromedark));
+  border-top:1px solid #fff;padding:4px;gap:4px;flex-wrap:wrap;
+}
+.xp-seg{
+  flex:1;min-width:84px;background:#F3F1E7;border-radius:2px;
+  padding:4px 8px;font-size:11px;font-weight:600;color:#2A2A2A;
+  box-shadow:inset 1px 1px 0 #7F7B6E, inset -1px -1px 0 #fff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.xp-seg b{color:#0C3AA0}
+
+/* ===== Winamp pink metal window ===== */
+.winamp{
+  border-radius:4px;overflow:hidden;
+  border:2px solid var(--pinkdeep);
+  box-shadow:0 14px 30px rgba(90,0,56,.5), inset 0 0 0 1px rgba(255,255,255,.25);
+}
+.wa-titlebar{
+  display:flex;align-items:center;justify-content:center;gap:10px;padding:6px 10px;
+  background:
+    repeating-linear-gradient(45deg,#3A0030 0 3px,#4E0040 3px 6px),
+    linear-gradient(180deg,#5A0048,#2E0024);
+  border-bottom:1px solid var(--pinkdeep);
+}
+.wa-dots{color:var(--pink1);font-size:8px;letter-spacing:3px;opacity:.8}
+.wa-brand{
+  font-family:'VT323',monospace;font-size:20px;letter-spacing:.14em;
+  color:#fff;text-shadow:0 0 8px var(--pink2),0 0 2px #fff;
+}
+.wa-body{
+  padding:12px;
+  background:
+    repeating-linear-gradient(100deg, var(--pink2) 0 2px, var(--pink1) 2px 4px);
+  position:relative;
+}
+.wa-body::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg, rgba(255,255,255,.5), transparent 45%);
+  pointer-events:none;
+}
+
+.wa-display{
+  position:relative;background:var(--lcd-bg);border-radius:3px;padding:10px 12px 12px;
+  box-shadow:inset 2px 2px 5px #000, inset -1px -1px 0 rgba(255,255,255,.12);
+}
+.wa-badge{
+  display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;
+  color:#1A000F;background:var(--lcd-fg);padding:3px 8px;border-radius:2px;
+  text-shadow:none;box-shadow:0 0 8px rgba(255,111,194,.7);
+}
+.wa-badge.protected{background:#FFD24D;box-shadow:0 0 8px rgba(255,210,77,.7)}
+.wa-marquee{margin-top:8px;overflow:hidden;white-space:nowrap}
+.wa-marquee span{
+  display:inline-block;font-family:'VT323',monospace;font-size:26px;color:var(--lcd-fg);
+  text-shadow:0 0 6px rgba(255,111,194,.75);
+}
+.wa-range{font-family:'VT323',monospace;font-size:15px;color:#FFB7E2;margin-top:2px}
+.wa-left{font-family:'VT323',monospace;font-size:22px;color:#fff;margin-top:6px;text-shadow:0 0 8px var(--lcd-fg)}
+
+.wa-eq{display:flex;align-items:flex-end;gap:2px;height:26px;margin-top:10px}
+.wa-eq i{flex:1;background:linear-gradient(180deg,#FFD9F0,var(--lcd-fg) 55%,#7A0048);border-radius:1px 1px 0 0;animation:eqpulse 1.1s ease-in-out infinite}
+.wa-eq i:nth-child(odd){animation-delay:.2s}
+.wa-eq i:nth-child(3n){animation-delay:.4s}
+@keyframes eqpulse{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+.wa-eq i{transform-origin:bottom}
+@media (prefers-reduced-motion: reduce){.wa-eq i{animation:none;transform:scaleY(.7)}.wa-marquee span{animation:none!important}}
+
+.wa-seek{margin-top:10px;height:12px;background:#000;border-radius:6px;box-shadow:inset 1px 1px 3px #000,inset -1px -1px 0 rgba(255,255,255,.08);overflow:hidden;position:relative}
+.wa-seek i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--pink1),var(--lcd-fg));box-shadow:0 0 8px var(--lcd-fg)}
+
+.wa-next{
+  margin-top:10px;background:rgba(0,0,0,.28);border-radius:3px;padding:7px 10px;
+  font-size:12.5px;color:#fff;font-weight:700;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.3);
+}
+.wa-next b{font-family:'VT323',monospace;font-size:13px;letter-spacing:.08em;color:#2E0024;background:var(--pink1);padding:1px 6px;border-radius:2px;margin-right:6px}
+
+.wa-playlist-head{
+  margin-top:12px;font-size:11px;font-weight:800;letter-spacing:.07em;color:#2E0024;
+  background:var(--pink1);padding:4px 8px;border-radius:2px 2px 0 0;
+}
+.wa-playlist{
+  list-style:none;margin:0;padding:4px;background:#12000A;border-radius:0 0 3px 3px;
+  max-height:300px;overflow-y:auto;
+  box-shadow:inset 2px 2px 5px #000;
+}
+.wa-playlist li{
+  display:flex;gap:8px;align-items:center;padding:5px 6px;border-radius:2px;
+  font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:12.5px;color:#FF9FD6;
+}
+.wa-playlist li:nth-child(even){background:rgba(255,111,194,.06)}
+.wa-playlist li .t{flex:none;width:76px;color:#C96FA0}
+.wa-playlist li .ic{flex:none;width:16px;text-align:center}
+.wa-playlist li.cur{background:var(--pink2)!important;color:#1A000F;font-weight:800}
+.wa-playlist li.cur .t{color:#4A001E}
+.wa-playlist li.protected{color:#FFD24D}
+.wa-playlist li.protected .t{color:#B88A2A}
+
+.wa-bottom{
+  display:flex;align-items:center;justify-content:space-between;padding:7px 10px;
+  background:repeating-linear-gradient(100deg, var(--pink3) 0 2px, var(--pink2) 2px 4px);
+  border-top:1px solid var(--pinkdeep);
+}
+.wa-buttons{display:flex;gap:4px}
+.wa-buttons span{
+  width:22px;height:18px;border-radius:2px;display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:#3A0030;background:linear-gradient(180deg,#FFE3F4,#FF9FD6 55%,#E85AAE);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8), 0 1px 0 rgba(0,0,0,.25);
+}
+.wa-grip{width:14px;height:14px;background:
+  repeating-linear-gradient(135deg, rgba(255,255,255,.5) 0 2px, transparent 2px 4px);
+  opacity:.8}
 </style>
 </head>
 <body>
 <main>
-<div class="top"><span class="pill" id="wk">Week A</span><span id="clock"></span></div>
-<div class="banner" id="banner" hidden></div>
-<section class="now" id="now" aria-live="polite">
-<span class="badge" id="badge"></span>
-<h1 id="label"></h1>
-<div class="range" id="range"></div>
-<div class="left" id="left"></div>
-<div class="bar"><i id="fill"></i></div>
-</section>
-<div class="next"><small>Next</small><span id="next"></span></div>
-<h2 id="todayh">Rest of today</h2>
-<ul id="list"></ul>
+  <div class="xp-frame">
+    <div class="xp-titlebar">
+      <span class="xp-icon">🖥️</span>
+      <span class="xp-title">Right Now.exe — SIL's Diva School</span>
+      <div class="xp-btns"><span class="xp-btn">_</span><span class="xp-btn">▢</span><span class="xp-btn close">✕</span></div>
+    </div>
+    <div class="xp-statusbar">
+      <div class="xp-seg">Day: <b id="seg-day">—</b></div>
+      <div class="xp-seg">Time: <b id="seg-time">—</b></div>
+      <div class="xp-seg">Term: <b id="wk">Week A</b></div>
+      <div class="xp-seg" id="seg-caption">System ready</div>
+    </div>
+  </div>
+
+  <div class="winamp" id="now" aria-live="polite">
+    <div class="wa-titlebar"><span class="wa-dots">●●●</span><span class="wa-brand">SIL★AMP</span><span class="wa-dots">●●●</span></div>
+    <div class="wa-body">
+      <div class="wa-display">
+        <span class="wa-badge" id="badge">ROUTINE</span>
+        <div class="wa-marquee"><span id="label">Loading…</span></div>
+        <div class="wa-range" id="range"></div>
+        <div class="wa-left" id="left"></div>
+        <div class="wa-eq" id="eq"></div>
+        <div class="wa-seek"><i id="fill"></i></div>
+      </div>
+      <div class="wa-next"><b>NEXT</b><span id="next"></span></div>
+      <div class="wa-playlist-head" id="todayh">TODAY'S QUEUE</div>
+      <ul class="wa-playlist" id="list"></ul>
+    </div>
+    <div class="wa-bottom">
+      <div class="wa-buttons"><span>◀◀</span><span>▶</span><span>❚❚</span><span>■</span><span>▶▶</span></div>
+      <div class="wa-grip"></div>
+    </div>
+  </div>
 </main>
 <script>
-var SCHED={"A":{"Mon":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","Crimsyn build","l"],["11:00","11:45","PE: back strength","o"],["11:45","12:45","Lunch + documentary","o"],["12:45","15:00","Worldbuilding (paper)","o"],["15:00","16:00","Job hunt","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Bot lab: bots + lorebooks","l"],["20:00","21:00","SillyTavern","n"]],"Tue":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","CSS lab","l"],["11:00","11:45","PE: yoga","o"],["11:45","12:30","Lunch + music","o"],["12:30","15:00","Novel outline (paper)","o"],["15:00","16:00","Pitch outreach","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Crimsyn build","l"],["20:00","21:00","Ko-fi content","n"]],"Wed":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","Crimsyn build","l"],["11:00","11:45","PE: core + stretch","o"],["11:45","12:30","Lunch + music","o"],["12:30","14:30","OC sketch + moodboard","o"],["14:30","15:00","Light choreo","o"],["15:00","16:00","Portfolio case study","l"],["16:00","17:00","Shower + reset","n"],["17:00","19:00","Image gen lab","l"],["19:00","21:00","SillyTavern","n"]],"Thu":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","Bot lab: bots + lorebooks","l"],["11:00","11:30","Writing prompt","o"],["11:30","12:15","PE: yoga","o"],["12:15","13:00","Lunch + music","o"],["13:00","14:30","HYBRIS worldbuilding","o"],["14:30","15:00","Nap / free","o"],["15:00","16:00","Job hunt","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Hawthorne site","l"],["20:00","21:00","Ko-fi content","n"]],"Fri":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","10:30","Lovebridge hub","l"],["10:30","11:00","Admin","l"],["11:00","11:45","PE: dance basics","o"],["11:45","14:15","Film club","o"],["14:15","15:00","Nap / free","o"],["15:00","16:00","Report card + admin","l"],["16:00","17:00","Shower + reset","n"],["17:00","19:00","Wildcard elective (dice roll)","l"],["19:00","21:00","Free night","n"]]},"B":{"Mon":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","Crimsyn build","l"],["11:00","11:45","PE: core + stretch","o"],["11:45","12:30","Lunch + music","o"],["12:30","14:30","OC moodboard","o"],["14:30","15:00","Nap / free","o"],["15:00","16:00","Pitch outreach","l"],["16:00","17:00","Shower + reset","n"],["17:00","19:30","Image gen lab","l"],["19:30","21:00","Ko-fi content","n"]],"Tue":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","Lovebridge hub","l"],["11:00","11:45","PE: yoga","o"],["11:45","13:00","Lunch + documentary","o"],["13:00","15:00","Worldbuilding (paper)","o"],["15:00","16:00","Job hunt","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Bot lab: bots + lorebooks","l"],["20:00","21:00","SillyTavern","n"]],"Wed":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","10:30","Portfolio case study","l"],["10:30","11:00","Writing prompt","o"],["11:00","11:45","PE: mobility","o"],["11:45","12:30","Lunch + music","o"],["12:30","14:30","Novel outline (paper)","o"],["14:30","15:00","Light choreo","o"],["15:00","16:00","Job hunt","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Hawthorne site","l"],["20:00","21:00","Free night","n"]],"Thu":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","CSS lab","l"],["11:00","11:45","PE: back strength","o"],["11:45","13:00","Lunch + documentary","o"],["13:00","15:00","HYBRIS lore bible","o"],["15:00","16:00","Job hunt","l"],["16:00","17:00","Shower + reset","n"],["17:00","20:00","Crimsyn build","l"],["20:00","21:00","SillyTavern","n"]],"Fri":[["7:00","9:00","Homeroom: coffee, smoke, music","n"],["9:00","11:00","HYBRIS site","l"],["11:00","11:45","PE: dance basics","o"],["11:45","14:15","Film club","o"],["14:15","15:00","Nap / free","o"],["15:00","16:00","Report card + admin","l"],["16:00","17:00","Shower + reset","n"],["17:00","19:00","Wildcard elective (dice roll)","l"],["19:00","21:00","Free night","n"]]}};
-var DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var SCHED={"A":{"Sun":[],"Mon":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","12:30","Job hunt","l"],["12:30","13:00","Writing prompt","o"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","Worldbuilding","o"],["16:00","18:00","Shower + reset","n"],["18:00","23:00","Crimsyn build","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]],"Tue":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","13:00","Inbox + light tasks","l"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","OC sketch + moodboard","o"],["16:00","17:30","Shower + reset","n"],["17:30","18:00","Writing prompt","o"],["18:00","23:00","Film club","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]],"Wed":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","12:30","Job hunt","l"],["12:30","13:00","Writing prompt","o"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","CSS lab","o"],["16:00","18:00","Shower + reset","n"],["18:00","23:00","Bot lab: bots + lorebooks","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]],"Thu":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","13:00","Pitch outreach","l"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","Image gen lab","o"],["16:00","17:30","Shower + reset","n"],["17:30","18:00","Writing prompt","o"],["18:00","23:00","Crimsyn build","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]],"Fri":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","12:30","Portfolio case study","l"],["12:30","13:00","Writing prompt","o"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","Novel outline","o"],["16:00","18:00","Shower + reset","n"],["18:00","23:00","Ko-fi content","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]],"Sat":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","13:00","Report card + admin","l"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","HYBRIS lore","o"],["16:00","17:30","Shower + reset","n"],["17:30","18:00","Writing prompt","o"],["18:00","23:00","Lovebridge hub","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]]},"B":{"Sun":[],"Mon":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","13:00","Pitch outreach","l"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","Novel outline","o"],["16:00","17:30","Shower + reset","n"],["17:30","18:00","Writing prompt","o"],["18:00","23:00","Crimsyn build","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]],"Tue":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","12:30","Inbox + light tasks","l"],["12:30","13:00","Writing prompt","o"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","Image gen lab","o"],["16:00","18:00","Shower + reset","n"],["18:00","23:00","Film club","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]],"Wed":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","13:00","Portfolio case study","l"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","Worldbuilding","o"],["16:00","17:30","Shower + reset","n"],["17:30","18:00","Writing prompt","o"],["18:00","23:00","Hawthorne site","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]],"Thu":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","12:30","Job hunt","l"],["12:30","13:00","Writing prompt","o"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","CSS lab","o"],["16:00","18:00","Shower + reset","n"],["18:00","23:00","Crimsyn build","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]],"Fri":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","13:00","Job hunt","l"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","OC sketch + moodboard","o"],["16:00","17:30","Shower + reset","n"],["17:30","18:00","Writing prompt","o"],["18:00","23:00","Ko-fi content","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]],"Sat":[["7:00","8:30","Homeroom: coffee, smoke, music","n"],["8:30","12:30","Report card + admin","l"],["12:30","13:00","Writing prompt","o"],["13:00","14:00","Lunch with mom","n"],["14:00","16:00","HYBRIS lore","o"],["16:00","18:00","Shower + reset","n"],["18:00","23:00","HYBRIS site","l"],["23:00","24:00","Mine time: SillyTavern / free night","n"]]}};
+var DAYNAMES=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 var FULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-var KIND={l:'Laptop ok',o:'Laptop OFF',n:'Routine'};
+var KIND={l:'LAPTOP MODE',o:'LOW POWER',n:'ROUTINE'};
+var ICON={l:'💻',o:'🎀',n:'🫧'};
 function mins(t){var p=t.split(':');return +p[0]*60+ +p[1];}
-function fmt(x){var h=Math.floor(x/60),m=x%60;return h+':'+(m<10?'0':'')+m;}
+function fmt(x){var h=Math.floor(x/60)%24,m=x%60;return h+':'+(m<10?'0':'')+m;}
 function dur(x){var h=Math.floor(x/60),m=x%60;return h?(h+'h '+(m<10?'0':'')+m+'m'):(m+' min');}
 function weekOf(d){
   var days=Math.round((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2026,9,19))/86400000);
   var idx=Math.floor(days/7);
   return ((idx%2)+2)%2===0?'A':'B';
 }
+function isProtected(label){return label.indexOf('Mine time')===0;}
 function $(id){return document.getElementById(id);}
+var eqEl=$('eq');
+for(var k=0;k<20;k++){var i=document.createElement('i');eqEl.appendChild(i);}
 function render(){
   var now=new Date(),dow=now.getDay(),cur=now.getHours()*60+now.getMinutes();
-  var weekend=dow===0||dow===6;
-  var monday=new Date(now.getFullYear(),now.getMonth(),now.getDate()+(weekend?(dow===6?2:1):0));
-  var wk=weekOf(weekend?monday:now);
-  $('wk').textContent='Week '+wk+(weekend?' (next)':'');
-  $('clock').textContent=FULL[dow]+' · '+fmt(cur);
+  var wk=weekOf(now);
+  $('wk').textContent='Week '+wk;
+  $('seg-day').textContent=FULL[dow];
+  $('seg-time').textContent=fmt(cur);
   var started=new Date(now.getFullYear(),now.getMonth(),now.getDate())>=new Date(2026,9,19);
-  var b=$('banner');
-  if(!started){b.hidden=false;b.textContent='School starts Monday Oct 19. This is a preview of Week A.';}else{b.hidden=true;}
+  $('seg-caption').textContent=started?'System ready':'Preview mode — opens Oct 19';
   var now_=$('now'),list=$('list');
   list.innerHTML='';
   var nextText='';
-  if(weekend){
-    now_.className='now';$('badge').textContent='Weekend';$('label').textContent='No school';
-    $('range').textContent='Free-for-all days';$('left').textContent='';$('fill').style.width='0';
-    var f=SCHED[wk].Mon[0];
+  var blocks=SCHED[wk][DAYNAMES[dow]];
+  if(dow===0){
+    $('badge').className='wa-badge';$('badge').textContent='DAY OFF';
+    $('label').textContent='No school today';
+    $('range').textContent='fully yours, diva';$('left').textContent='';$('fill').style.width='0';
+    var nwk=weekOf(new Date(now.getFullYear(),now.getMonth(),now.getDate()+1));
+    var f=SCHED[nwk]['Mon'][0];
     nextText='Monday '+fmt(mins(f[0]))+' · '+f[2];
-    $('todayh').textContent='';
+    $('todayh').textContent='SUNDAY — QUEUE EMPTY';
   } else {
-    var blocks=SCHED[weekOf(now)][DAYS[dow]];
     var idx=-1;
     for(var i=0;i<blocks.length;i++){if(cur>=mins(blocks[i][0])&&cur<mins(blocks[i][1])){idx=i;break;}}
     if(idx>=0){
       var bl=blocks[idx],s=mins(bl[0]),e=mins(bl[1]);
-      now_.className='now '+bl[3];
-      $('badge').textContent=KIND[bl[3]];
+      $('badge').className='wa-badge'+(isProtected(bl[2])?' protected':'');
+      $('badge').textContent=isProtected(bl[2])?'YOURS NOW':KIND[bl[3]];
       $('label').textContent=bl[2];
-      $('range').textContent=fmt(s)+' to '+fmt(e);
+      $('range').textContent=fmt(s)+' – '+fmt(e===1440?0:e);
       $('left').textContent=dur(e-cur)+' left';
       $('fill').style.width=Math.round((cur-s)/(e-s)*100)+'%';
       var nb=blocks[idx+1];
-      nextText=nb?fmt(mins(nb[0]))+' · '+nb[2]:(dow===5?'Weekend':'Tomorrow 7:00 · Homeroom');
+      if(nb){nextText=fmt(mins(nb[0]))+' · '+nb[2];}
+      else if(dow===6){nextText='Sunday · day off';}
+      else{nextText='Tomorrow 7:00 · Homeroom';}
     } else if(cur<mins(blocks[0][0])){
-      now_.className='now';$('badge').textContent='Before school';$('label').textContent='Bell at 7:00';
+      $('badge').className='wa-badge';$('badge').textContent='BEFORE SCHOOL';
+      $('label').textContent='Bell rings at 7:00';
       $('range').textContent='';$('left').textContent=dur(mins(blocks[0][0])-cur)+' to go';$('fill').style.width='0';
       nextText='7:00 · '+blocks[0][2];
     } else {
-      now_.className='now';$('badge').textContent='School is out';$('label').textContent='Day done';
-      $('range').textContent='Wind-down alarm at 11:30, lights out around midnight';$('left').textContent='';$('fill').style.width='100%';
-      nextText=dow===5?'Weekend':'Tomorrow 7:00 · Homeroom';
+      $('badge').className='wa-badge';$('badge').textContent='WRAPPED';
+      $('label').textContent="School's out";
+      $('range').textContent='stay cozy, lights out whenever';$('left').textContent='';$('fill').style.width='100%';
+      nextText=dow===6?'Sunday · day off':'Tomorrow 7:00 · Homeroom';
     }
-    $('todayh').textContent='Today · '+FULL[dow];
+    $('todayh').textContent=FULL[dow].toUpperCase()+"'S QUEUE";
     for(var j=0;j<blocks.length;j++){
       if(cur>=mins(blocks[j][1]))continue;
       var li=document.createElement('li');
-      li.className=blocks[j][3]+(j===idx?' cur':'');
-      var a=document.createElement('span');a.textContent=fmt(mins(blocks[j][0]))+'-'+fmt(mins(blocks[j][1]));
-      var c=document.createElement('span');c.textContent=blocks[j][2];
-      li.appendChild(a);li.appendChild(c);list.appendChild(li);
+      li.className=(j===idx?'cur':'')+(isProtected(blocks[j][2])?' protected':'');
+      var ic=document.createElement('span');ic.className='ic';ic.textContent=isProtected(blocks[j][2])?'💖':ICON[blocks[j][3]];
+      var t=document.createElement('span');t.className='t';t.textContent=fmt(mins(blocks[j][0]))+'-'+fmt(mins(blocks[j][1])===1440?0:mins(blocks[j][1]));
+      var lbl=document.createElement('span');lbl.textContent=blocks[j][2];
+      li.appendChild(ic);li.appendChild(t);li.appendChild(lbl);list.appendChild(li);
     }
   }
   $('next').textContent=nextText;
